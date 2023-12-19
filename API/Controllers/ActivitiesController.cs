@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 //using Domain;
+using Microsoft.AspNetCore.Cors;
 
 namespace API.Controllers
 {
+     // Instead of [EnableCors("ReactivityPolicy")], we put "" the code in Program.cs.
+     //[EnableCors("ReactivityPolicy")]
     public class ActivitiesController : BaseApiController
     {
         private readonly DataContext _context;
