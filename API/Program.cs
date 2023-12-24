@@ -1,3 +1,4 @@
+using Application.Activities;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -21,7 +22,10 @@ builder.Services.AddCors(o => o.AddPolicy("ReactivityPolicy", builder => {
            .WithOrigins("http://localhost:3001");
 }));
 
+builder.Services.AddMediatR(cgf=>cgf.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

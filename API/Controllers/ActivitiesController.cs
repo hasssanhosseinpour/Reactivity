@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 //using Domain;
 using Microsoft.AspNetCore.Cors;
+using MediatR;
+using Application.Activities;
 
 namespace API.Controllers
 {
@@ -12,26 +14,37 @@ namespace API.Controllers
      //[EnableCors("ReactivityPolicy")]
     public class ActivitiesController : BaseApiController
     {
-        private readonly DataContext _context;
-        public ActivitiesController(DataContext context)
+        private readonly IMediator _mediator;
+       
+        public ActivitiesController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
+           
             
         }
         // GET: api/Activities
+        // [HttpGet]
+        // public async Task<ActionResult<List<Domain.Activity>>> GetActivities()
+        // {
+        //     if(_context.Activities == null)
+        //         return NotFound();
+        //     return await _context.Activities.ToListAsync();
+        // }
+
+
         [HttpGet]
         public async Task<ActionResult<List<Domain.Activity>>> GetActivities()
         {
-            if(_context.Activities == null)
-                return NotFound();
-            return await _context.Activities.ToListAsync();
+            return await _mediator.Send(new List.Query());
         }
+
+
 
         // GET: api/Activities/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Domain.Activity>> GetActivity(Guid id)
         {
-            return await _context.Activities.FindAsync(id);
+            return Ok();
         }
 
 
